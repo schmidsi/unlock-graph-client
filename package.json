@@ -1,0 +1,26 @@
+{
+  "name": "graph-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node --transpileOnly src/index.ts",
+    "build-client": "graphclient build",
+    "check": "tsc --pretty --noEmit",
+    "graphiql": "graphclient serve-dev"
+  },
+  "dependencies": {
+    "@graphprotocol/client-add-source-name": "1.0.13",
+    "@graphprotocol/client-cli": "2.2.15",
+    "aws-lambda": "^1.0.7",
+    "graphql": "^16.6.0",
+    "graphql-yoga": "^3.0.0-next.10",
+    "wrangler": "^2.1.15"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.18.0",
+    "@types/aws-lambda": "^8.10.108",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  }
+}

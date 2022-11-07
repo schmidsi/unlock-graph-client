@@ -1,0 +1,3 @@
+name = "graph-client"
+compatibility_date = "2022-11-07"
+node_compat = true

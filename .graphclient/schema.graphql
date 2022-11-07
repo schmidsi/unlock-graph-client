@@ -1,0 +1,456 @@
+schema {
+  query: Query
+  subscription: Subscription
+}
+
+type Query {
+  lock(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Lock
+  locks(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Lock_orderBy
+    orderDirection: OrderDirection
+    where: Lock_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Lock!]!
+  key(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Key
+  keys(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Key_orderBy
+    orderDirection: OrderDirection
+    where: Key_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Key!]!
+  """Access to subgraph metadata"""
+  _meta(block: Block_height): _Meta_
+  crossLocks(first: Int!, chainNames: [String!]!): [Lock!]!
+}
+
+type Subscription {
+  lock(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Lock
+  locks(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Lock_orderBy
+    orderDirection: OrderDirection
+    where: Lock_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Lock!]!
+  key(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Key
+  keys(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Key_orderBy
+    orderDirection: OrderDirection
+    where: Key_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Key!]!
+  """Access to subgraph metadata"""
+  _meta(block: Block_height): _Meta_
+}
+
+scalar BigDecimal
+
+scalar BigInt
+
+input BlockChangedFilter {
+  number_gte: Int!
+}
+
+input Block_height {
+  hash: Bytes
+  number: Int
+  number_gte: Int
+}
+
+scalar Bytes
+
+type Key {
+  id: ID!
+  lock: Lock!
+  tokenId: BigInt!
+  owner: Bytes!
+  manager: Bytes
+  expiration: BigInt!
+  tokenURI: String
+  createdAtBlock: BigInt!
+  cancelled: Boolean
+}
+
+input Key_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  lock: String
+  lock_not: String
+  lock_gt: String
+  lock_lt: String
+  lock_gte: String
+  lock_lte: String
+  lock_in: [String!]
+  lock_not_in: [String!]
+  lock_contains: String
+  lock_contains_nocase: String
+  lock_not_contains: String
+  lock_not_contains_nocase: String
+  lock_starts_with: String
+  lock_starts_with_nocase: String
+  lock_not_starts_with: String
+  lock_not_starts_with_nocase: String
+  lock_ends_with: String
+  lock_ends_with_nocase: String
+  lock_not_ends_with: String
+  lock_not_ends_with_nocase: String
+  lock_: Lock_filter
+  tokenId: BigInt
+  tokenId_not: BigInt
+  tokenId_gt: BigInt
+  tokenId_lt: BigInt
+  tokenId_gte: BigInt
+  tokenId_lte: BigInt
+  tokenId_in: [BigInt!]
+  tokenId_not_in: [BigInt!]
+  owner: Bytes
+  owner_not: Bytes
+  owner_in: [Bytes!]
+  owner_not_in: [Bytes!]
+  owner_contains: Bytes
+  owner_not_contains: Bytes
+  manager: Bytes
+  manager_not: Bytes
+  manager_in: [Bytes!]
+  manager_not_in: [Bytes!]
+  manager_contains: Bytes
+  manager_not_contains: Bytes
+  expiration: BigInt
+  expiration_not: BigInt
+  expiration_gt: BigInt
+  expiration_lt: BigInt
+  expiration_gte: BigInt
+  expiration_lte: BigInt
+  expiration_in: [BigInt!]
+  expiration_not_in: [BigInt!]
+  tokenURI: String
+  tokenURI_not: String
+  tokenURI_gt: String
+  tokenURI_lt: String
+  tokenURI_gte: String
+  tokenURI_lte: String
+  tokenURI_in: [String!]
+  tokenURI_not_in: [String!]
+  tokenURI_contains: String
+  tokenURI_contains_nocase: String
+  tokenURI_not_contains: String
+  tokenURI_not_contains_nocase: String
+  tokenURI_starts_with: String
+  tokenURI_starts_with_nocase: String
+  tokenURI_not_starts_with: String
+  tokenURI_not_starts_with_nocase: String
+  tokenURI_ends_with: String
+  tokenURI_ends_with_nocase: String
+  tokenURI_not_ends_with: String
+  tokenURI_not_ends_with_nocase: String
+  createdAtBlock: BigInt
+  createdAtBlock_not: BigInt
+  createdAtBlock_gt: BigInt
+  createdAtBlock_lt: BigInt
+  createdAtBlock_gte: BigInt
+  createdAtBlock_lte: BigInt
+  createdAtBlock_in: [BigInt!]
+  createdAtBlock_not_in: [BigInt!]
+  cancelled: Boolean
+  cancelled_not: Boolean
+  cancelled_in: [Boolean!]
+  cancelled_not_in: [Boolean!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+}
+
+enum Key_orderBy {
+  id
+  lock
+  tokenId
+  owner
+  manager
+  expiration
+  tokenURI
+  createdAtBlock
+  cancelled
+}
+
+type Lock {
+  id: ID!
+  address: Bytes!
+  name: String
+  symbol: String
+  expirationDuration: BigInt
+  tokenAddress: Bytes!
+  price: BigInt!
+  lockManagers: [Bytes!]!
+  version: BigInt!
+  totalKeys: BigInt!
+  maxNumberOfKeys: BigInt
+  maxKeysPerAddress: BigInt
+  keys(skip: Int = 0, first: Int = 100, orderBy: Key_orderBy, orderDirection: OrderDirection, where: Key_filter): [Key!]
+  createdAtBlock: BigInt
+  chainName: String
+}
+
+input Lock_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  address: Bytes
+  address_not: Bytes
+  address_in: [Bytes!]
+  address_not_in: [Bytes!]
+  address_contains: Bytes
+  address_not_contains: Bytes
+  name: String
+  name_not: String
+  name_gt: String
+  name_lt: String
+  name_gte: String
+  name_lte: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_contains: String
+  name_contains_nocase: String
+  name_not_contains: String
+  name_not_contains_nocase: String
+  name_starts_with: String
+  name_starts_with_nocase: String
+  name_not_starts_with: String
+  name_not_starts_with_nocase: String
+  name_ends_with: String
+  name_ends_with_nocase: String
+  name_not_ends_with: String
+  name_not_ends_with_nocase: String
+  symbol: String
+  symbol_not: String
+  symbol_gt: String
+  symbol_lt: String
+  symbol_gte: String
+  symbol_lte: String
+  symbol_in: [String!]
+  symbol_not_in: [String!]
+  symbol_contains: String
+  symbol_contains_nocase: String
+  symbol_not_contains: String
+  symbol_not_contains_nocase: String
+  symbol_starts_with: String
+  symbol_starts_with_nocase: String
+  symbol_not_starts_with: String
+  symbol_not_starts_with_nocase: String
+  symbol_ends_with: String
+  symbol_ends_with_nocase: String
+  symbol_not_ends_with: String
+  symbol_not_ends_with_nocase: String
+  expirationDuration: BigInt
+  expirationDuration_not: BigInt
+  expirationDuration_gt: BigInt
+  expirationDuration_lt: BigInt
+  expirationDuration_gte: BigInt
+  expirationDuration_lte: BigInt
+  expirationDuration_in: [BigInt!]
+  expirationDuration_not_in: [BigInt!]
+  tokenAddress: Bytes
+  tokenAddress_not: Bytes
+  tokenAddress_in: [Bytes!]
+  tokenAddress_not_in: [Bytes!]
+  tokenAddress_contains: Bytes
+  tokenAddress_not_contains: Bytes
+  price: BigInt
+  price_not: BigInt
+  price_gt: BigInt
+  price_lt: BigInt
+  price_gte: BigInt
+  price_lte: BigInt
+  price_in: [BigInt!]
+  price_not_in: [BigInt!]
+  lockManagers: [Bytes!]
+  lockManagers_not: [Bytes!]
+  lockManagers_contains: [Bytes!]
+  lockManagers_contains_nocase: [Bytes!]
+  lockManagers_not_contains: [Bytes!]
+  lockManagers_not_contains_nocase: [Bytes!]
+  version: BigInt
+  version_not: BigInt
+  version_gt: BigInt
+  version_lt: BigInt
+  version_gte: BigInt
+  version_lte: BigInt
+  version_in: [BigInt!]
+  version_not_in: [BigInt!]
+  totalKeys: BigInt
+  totalKeys_not: BigInt
+  totalKeys_gt: BigInt
+  totalKeys_lt: BigInt
+  totalKeys_gte: BigInt
+  totalKeys_lte: BigInt
+  totalKeys_in: [BigInt!]
+  totalKeys_not_in: [BigInt!]
+  maxNumberOfKeys: BigInt
+  maxNumberOfKeys_not: BigInt
+  maxNumberOfKeys_gt: BigInt
+  maxNumberOfKeys_lt: BigInt
+  maxNumberOfKeys_gte: BigInt
+  maxNumberOfKeys_lte: BigInt
+  maxNumberOfKeys_in: [BigInt!]
+  maxNumberOfKeys_not_in: [BigInt!]
+  maxKeysPerAddress: BigInt
+  maxKeysPerAddress_not: BigInt
+  maxKeysPerAddress_gt: BigInt
+  maxKeysPerAddress_lt: BigInt
+  maxKeysPerAddress_gte: BigInt
+  maxKeysPerAddress_lte: BigInt
+  maxKeysPerAddress_in: [BigInt!]
+  maxKeysPerAddress_not_in: [BigInt!]
+  keys_: Key_filter
+  createdAtBlock: BigInt
+  createdAtBlock_not: BigInt
+  createdAtBlock_gt: BigInt
+  createdAtBlock_lt: BigInt
+  createdAtBlock_gte: BigInt
+  createdAtBlock_lte: BigInt
+  createdAtBlock_in: [BigInt!]
+  createdAtBlock_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+}
+
+enum Lock_orderBy {
+  id
+  address
+  name
+  symbol
+  expirationDuration
+  tokenAddress
+  price
+  lockManagers
+  version
+  totalKeys
+  maxNumberOfKeys
+  maxKeysPerAddress
+  keys
+  createdAtBlock
+}
+
+"""Defines the order direction, either ascending or descending"""
+enum OrderDirection {
+  asc
+  desc
+}
+
+type _Block_ {
+  """The hash of the block"""
+  hash: Bytes
+  """The block number"""
+  number: Int!
+  """Integer representation of the timestamp stored in blocks for the chain"""
+  timestamp: Int
+}
+
+"""The type for the top-level _meta field"""
+type _Meta_ {
+  """
+  Information about a specific subgraph block. The hash of the block
+  will be null if the _meta field has a block constraint that asks for
+  a block number. It will be filled if the _meta field has no block constraint
+  and therefore asks for the latest  block
+  
+  """
+  block: _Block_!
+  """The deployment ID"""
+  deployment: String!
+  """If `true`, the subgraph encountered indexing errors at some past block"""
+  hasIndexingErrors: Boolean!
+}
+
+enum _SubgraphErrorPolicy_ {
+  """Data will be returned even if the subgraph has indexing errors"""
+  allow
+  """
+  If the subgraph has indexing errors, data will be omitted. The default.
+  """
+  deny
+}

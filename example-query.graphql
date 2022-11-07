@@ -1,0 +1,6 @@
+query CrossLocksExample($chainNames: [String!]!) {
+  crossLocks(first: 2, chainNames: $chainNames) {
+    id
+    name
+  }
+}

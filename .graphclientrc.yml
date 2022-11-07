@@ -1,0 +1,21 @@
+sources:
+  - name: Unlock
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/unlock-protocol/{context.chainName:mainnet}-v2
+
+additionalTypeDefs: |
+  extend type Lock {
+    chainName: String
+  }
+  extend type Query {
+    crossLocks(first: Int!, chainNames: [String!]!): [Lock!]!
+  }
+additionalResolvers:
+  - ./src/resolvers.ts
+
+documents:
+  - ./example-query.graphql
+
+codegen:
+  contextType: "MeshContext & { chainName: string }"
